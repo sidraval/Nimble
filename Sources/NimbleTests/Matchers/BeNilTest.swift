@@ -5,6 +5,7 @@ class BeNilTest: XCTestCase, XCTestCaseProvider {
     var allTests: [(String, () -> Void)] {
         return [
             ("testBeNil", testBeNil),
+            ("testBeVoid", testBeVoid),
         ]
     }
 
@@ -23,6 +24,19 @@ class BeNilTest: XCTestCase, XCTestCaseProvider {
 
         failsWithErrorMessage("expected to be nil, got <1>") {
             expect(1 as Int?).to(beNil())
+        }
+    }
+
+    func testBeVoid() {
+        expect(Void()).to(beVoid())
+
+        failsWithErrorMessage("expected to not equal (), got <()>") {
+            expect(Void()).notTo(beVoid())
+        }
+
+        failsWithErrorMessage("expected to equal (), got <5>") {
+            let v = { return 1 }
+            expect(v()).to(beVoid())
         }
     }
 }
